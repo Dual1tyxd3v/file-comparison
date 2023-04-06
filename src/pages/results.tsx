@@ -1,11 +1,10 @@
 /* eslint-disable no-console */
 import React, { useCallback, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import LinkBack from '../components/link-back/link-back';
 import ResultsCard from '../components/results-card/results-card';
-import { AppRoute } from '../const';
 import { useAppSelector } from '../hooks';
-import { Collection, State } from '../types/types';
+import { Collection, Errors, State } from '../types/types';
+import ResultsControls from '../components/results-controls/results-controls';
 
 function Results(): JSX.Element {
   const [activeAudio, setActiveAudio] = useState<string | null>(null);
@@ -23,12 +22,12 @@ function Results(): JSX.Element {
           <div className="results__container">
             {
               errors && errors.data.map((errorPair, i) => {
-                const key1 = `${i}__${errorPair.orig.hash}`;
-                const key2 = `${i}s__${errorPair.added.hash}`;
+                const key1 = `${i}__orig${errorPair.original.hash}`;
+                const key2 = `${i}s__added${errorPair.added.hash}`;
                 const key3 = `${i}fr`;
                 return (
                   <React.Fragment key={key3}>
-                    <ResultsCard key={key1} error={errorPair.orig} isPlaying={activeAudio === errorPair.orig.name} setActive={setActive}/>
+                    <ResultsCard key={key1} error={errorPair.original} isPlaying={activeAudio === errorPair.original.name} setActive={setActive}/>
                     <ResultsCard key={key2} error={errorPair.added} isPlaying={activeAudio === errorPair.added.name} setActive={setActive} toDelete/>
                   </React.Fragment>
                 );
@@ -36,10 +35,7 @@ function Results(): JSX.Element {
             }
           </div>
         </div>
-        <div className="results__controls">
-          <button className="button" type="button">Удалить похожие</button>
-          <LinkBack path={AppRoute.Stats} />
-        </div>
+        <ResultsControls type={type as string} errors={errors as Errors} />
       </div>
     </section>
   );

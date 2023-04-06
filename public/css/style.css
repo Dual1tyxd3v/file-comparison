@@ -250,7 +250,11 @@ img {
   flex-grow: 1;
 }
 .results__controls {
-  min-width: 180px;
+  min-width: 210px;
+  padding: 10px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 .results .link:hover svg {
   transform: none;
@@ -278,15 +282,32 @@ img {
   border-radius: 20px;
   overflow: hidden;
   background-color: #000;
+  word-break: break-all;
 }
 .card audio {
   width: 265px;
+  margin-bottom: 10px;
 }
 .card img {
   border-radius: 20px;
+  margin-bottom: 10px;
 }
 .card--red {
   background-color: rgb(134, 47, 47);
+}
+.card__deleteBtn {
+  padding: 3px 5px;
+  border-radius: 40%;
+  cursor: pointer;
+  background-color: rgba(128, 128, 128, 0.5);
+  border: none;
+  font-weight: bold;
+  font-size: 18px;
+  letter-spacing: 2px;
+  margin-bottom: 10px;
+}
+.card__deleteBtn:hover {
+  background-color: #fff;
 }
 /* End Card */
 

@@ -1,16 +1,16 @@
 /* eslint-disable no-console */
 import { useEffect, useRef } from 'react';
 import { Error } from '../../types/types';
-import { getShortName } from '../../utils';
+// import { getShortName } from '../../utils';
 
 type ResultsCardProps = {
-  error: Error,
-  toDelete?: boolean,
-  isPlaying: boolean,
+  error: Error;
+  toDelete?: boolean;
+  isPlaying: boolean;
   setActive: (name: string) => void;
 }
 
-function ResultsCard({error, toDelete, isPlaying, setActive}: ResultsCardProps): JSX.Element {
+function ResultsCard({ error, toDelete, isPlaying, setActive}: ResultsCardProps): JSX.Element {
   const {name, hash, src, ext} = error;
   const audio = useRef<null | HTMLAudioElement>(null);
 
@@ -25,7 +25,7 @@ function ResultsCard({error, toDelete, isPlaying, setActive}: ResultsCardProps):
   function playHandler() {
     setActive(name);
   }
-  const shortName = getShortName(name);
+
   return (
     <div className={`card ${toDelete ? 'card--red' : ''}`}>
       {
@@ -33,7 +33,8 @@ function ResultsCard({error, toDelete, isPlaying, setActive}: ResultsCardProps):
           ? <img src={`data:image/png;base64,${src}`} alt="Card" className="card__img" />
           : <audio src={src} controls ref={audio} onPlay={playHandler}></audio>
       }
-      <p className="card__text">{shortName}</p>
+      <button className="card__deleteBtn">Удалить</button>
+      <p className="card__text">{name}</p>
       <p className="card__text">{hash}</p>
     </div>
   );

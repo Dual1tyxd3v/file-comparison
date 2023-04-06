@@ -61,7 +61,7 @@ export type Extensions = {
 }
 
 export type ErrorPair = {
-  orig: Error;
+  original: Error;
   added: Error;
 }
 

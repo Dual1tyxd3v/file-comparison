@@ -13,7 +13,7 @@ function createWindow() {
     slashes: true,
   });
   const win = new BrowserWindow({
-    width: 900,
+    width: 940,
     height: 600,
     webPreferences: {
       nodeIntegration: true,
@@ -82,7 +82,16 @@ ipcMain.handle('replaceFiles', (e, data) => {
   const dataObj = JSON.parse(data);
   dataObj.old.forEach((file, i) => {
     fs.rename(file, dataObj.new[i], (err) => {
-      if (err) {throw err;}
+      if (err) { throw err; }
     });
   });
 });
+
+ipcMain.handle('removeFiles', (e, data) => new Promise((res, rej) => {
+  data.forEach((file) => {
+    fs.unlink(file, (err) => {
+      if (err) { rej(false); }
+    });
+  });
+  res(true);
+}));

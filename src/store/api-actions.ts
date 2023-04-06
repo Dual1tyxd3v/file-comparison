@@ -20,17 +20,17 @@ export const compareCollections = createAsyncThunk<void, CompareCollections, {
         const origExt = getType(path.extname(hash[k]));
         const addedExt = getType(path.extname(addedHash[k]));
         errors.data.push({
-          orig: {
+          original: {
             hash: k,
             ext: origExt,
-            name: path.basename(hash[k]),
-            src: await api(origExt === 'image' ? 'toBase64' : 'toMp3', hash[k])
+            name: hash[k],
+            src: await api(origExt === 'image' ? 'toBase64' : 'toMp3', hash[k]),
           },
           added: {
             hash: k,
             ext: addedExt,
-            name: path.basename(addedHash[k]),
-            src: await api(addedExt === 'image' ? 'toBase64' : 'toMp3', addedHash[k])
+            name: addedHash[k],
+            src: await api(addedExt === 'image' ? 'toBase64' : 'toMp3', addedHash[k]),
           }
         });
         errors.count++;
@@ -38,8 +38,6 @@ export const compareCollections = createAsyncThunk<void, CompareCollections, {
         resultHash[k] = addedHash[k];
       }
     }
-    // eslint-disable-next-line no-console
-    console.log(errors);
     dispatch(setCompareErrors(errors));
     dispatch(setAddedHash(resultHash));
   }
@@ -70,7 +68,7 @@ export const fetchFiles = createAsyncThunk<void, ApiFetchRequest, {
         errors.count++;
         const ext = getType(data.ext);
         errors.data.push({
-          orig: {
+          original: {
             name: result[data.hash],
             hash: data.hash,
             ext: ext,

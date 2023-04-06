@@ -1,6 +1,6 @@
 /* eslint-disable no-console */
 import { filesExt } from './const';
-import { Extensions, Hash } from './types/types';
+import { ErrorPair, Extensions, Hash } from './types/types';
 
 const { ipcRenderer } = window.require('electron');
 
@@ -44,4 +44,9 @@ export const assignHash = async (orig: Hash, added: Hash, oldDir: string, dir: s
     path: dir
   }));
   return resp;
+};
+
+export const deleteFiles = async (type: string, data: ErrorPair[]) => {
+  const files: string[] = data.map((file: ErrorPair) => file[type as keyof ErrorPair].name);
+  return await ipcRenderer.invoke('removeFiles', files);
 };
